@@ -9,14 +9,14 @@ import { MatIconModule } from '@angular/material/icon';
   template: `
     <a 
       [href]="'tel:' + data.phone().replace(' ', '')"
-      class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-oak text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group"
+      class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-oak text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all group animate-pulse"
       aria-label="Zavolať"
     >
       <div class="absolute inset-0 bg-oak rounded-full animate-ping opacity-20"></div>
       <mat-icon class="text-3xl">phone</mat-icon>
       
       <!-- Tooltip -->
-      <span class="absolute right-20 bg-anthracite text-white text-xs font-bold py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl">
+      <span class="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-anthracite text-white text-xs font-bold py-2 px-4 rounded-lg opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap pointer-events-none shadow-xl">
         Zavolať: {{ data.phone() }}
       </span>
     </a>

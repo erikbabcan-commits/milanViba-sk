@@ -52,4 +52,52 @@ export class DataService {
   ]);
 
   readonly partners = signal<string[]>(['RIGIPS', 'KNAUF', 'MAPEI', 'PCI']);
+
+  readonly testimonials = signal([
+    {
+      id: 1,
+      name: 'Peter K.',
+      text: 'Maximálna spokojnosť s rekonštrukciou kúpeľne. Pán Viba je skutočný odborník, ktorý si potrpí na detaily.',
+      rating: 5
+    },
+    {
+      id: 2,
+      name: 'Mária S.',
+      text: 'Veľmi oceňujem čistotu na pracovisku a dodržanie dohodnutého termínu. Odporúčam všetkými desiatimi.',
+      rating: 5
+    },
+    {
+      id: 3,
+      name: 'Jozef H.',
+      text: 'Kompletná prestavba bytu prebehla bez problémov. Skvelá komunikácia a profesionálny prístup.',
+      rating: 5
+    }
+  ]);
+
+  readonly processSteps = signal([
+    {
+      id: 1,
+      title: 'Obhliadka a konzultácia',
+      description: 'Prídeme k vám, zameriame priestory a prekonzultujeme vaše predstavy a možnosti.',
+      icon: 'visibility'
+    },
+    {
+      id: 2,
+      title: 'Cenová ponuka',
+      description: 'Vypracujeme detailný rozpočet materiálov a prác bez skrytých poplatkov.',
+      icon: 'description'
+    },
+    {
+      id: 3,
+      title: 'Realizácia',
+      description: 'Samotné stavebné práce pod neustálym dohľadom a s dôrazom na kvalitu.',
+      icon: 'construction'
+    },
+    {
+      id: 4,
+      title: 'Odovzdanie diela',
+      description: 'Finálna kontrola, upratanie a odovzdanie hotového projektu k vašej spokojnosti.',
+      icon: 'task_alt'
+    }
+  ]);
 }

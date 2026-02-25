@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ElementRef, viewChild, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from './data.service';
 import { MatIconModule } from '@angular/material/icon';
+import { animate } from 'motion';
 
 @Component({
   selector: 'app-hero',
@@ -20,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
       </div>
 
       <!-- Content -->
-      <div class="relative z-10 container mx-auto px-6 text-center">
+      <div #content class="relative z-10 container mx-auto px-6 text-center opacity-0">
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight">
           Kompletné prestavby <br class="hidden md:block"> bytov a domov
         </h1>
@@ -56,4 +57,19 @@ import { MatIconModule } from '@angular/material/icon';
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Hero {}
+export class Hero {
+  private readonly content = viewChild<ElementRef>('content');
+
+  constructor() {
+    afterNextRender(() => {
+      const el = this.content()?.nativeElement;
+      if (el) {
+        animate(
+          el,
+          { opacity: [0, 1], y: [20, 0] },
+          { duration: 1, ease: [0.22, 1, 0.36, 1] }
+        );
+      }
+    });
+  }
+}

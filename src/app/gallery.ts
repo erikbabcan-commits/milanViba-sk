@@ -1,23 +1,24 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, ElementRef, viewChild, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService, GalleryItem } from './data.service';
 import { MatIconModule } from '@angular/material/icon';
+import { animate, stagger, inView } from 'motion';
 
 @Component({
   selector: 'app-gallery',
   imports: [CommonModule, MatIconModule],
   template: `
-    <section id="gallery" class="py-24 bg-white">
+    <section id="gallery" class="py-24 bg-white overflow-hidden">
       <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
+        <div #header class="text-center mb-16 opacity-0">
           <h2 class="text-3xl md:text-5xl font-extrabold text-anthracite mb-4">Ukážky prác</h2>
           <div class="w-20 h-1.5 bg-oak mx-auto rounded-full"></div>
         </div>
 
-        <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        <div #grid class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
           @for (item of data.gallery(); track item.id) {
             <div 
-              class="relative overflow-hidden rounded-2xl cursor-pointer group break-inside-avoid"
+              class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group break-inside-avoid opacity-0"
               (click)="openLightbox(item)"
             >
               <img 
@@ -71,6 +72,41 @@ import { MatIconModule } from '@angular/material/icon';
 export class Gallery {
   protected readonly data = inject(DataService);
   protected readonly selectedImage = signal<GalleryItem | null>(null);
+  
+  private readonly header = viewChild<ElementRef>('header');
+  private readonly grid = viewChild<ElementRef>('grid');
+
+  constructor() {
+    afterNextRender(() => {
+      const headerEl = this.header()?.nativeElement;
+      const gridEl = this.grid()?.nativeElement;
+
+      if (headerEl) {
+        inView(headerEl, () => {
+          animate(
+            headerEl,
+            { opacity: [0, 1], y: [20, 0] },
+            { duration: 0.8, ease: "easeOut" }
+          );
+        });
+      }
+
+      if (gridEl) {
+        inView(gridEl, () => {
+          const items = gridEl.querySelectorAll('.gallery-item');
+          animate(
+            items,
+            { opacity: [0, 1], scale: [0.95, 1], y: [20, 0] },
+            { 
+              delay: stagger(0.1),
+              duration: 0.6,
+              ease: "easeOut"
+            }
+          );
+        });
+      }
+    });
+  }
 
   openLightbox(item: GalleryItem) {
     this.selectedImage.set(item);

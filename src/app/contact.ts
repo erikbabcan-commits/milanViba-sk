@@ -1,16 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ElementRef, viewChild, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from './data.service';
 import { MatIconModule } from '@angular/material/icon';
+import { animate, inView } from 'motion';
 
 @Component({
   selector: 'app-contact',
   imports: [CommonModule, MatIconModule],
   template: `
-    <section id="contact" class="py-24 bg-anthracite text-white">
+    <section id="contact" class="py-24 bg-anthracite text-white overflow-hidden">
       <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
+          <div #leftCol class="opacity-0">
             <h2 class="text-4xl md:text-5xl font-extrabold mb-8">Máte projekt? <br> Poďme ho zrealizovať.</h2>
             <p class="text-white/60 text-lg mb-12 max-w-md">
               Sme pripravení na vaše výzvy. Či už ide o malú kúpeľňu alebo kompletnú prestavbu domu, postaráme sa o každý detail.
@@ -39,7 +40,7 @@ import { MatIconModule } from '@angular/material/icon';
             </div>
           </div>
 
-          <div class="bg-white/5 p-10 rounded-3xl border border-white/10">
+          <div #rightCol class="bg-white/5 p-10 rounded-3xl border border-white/10 opacity-0">
             <h3 class="text-xl font-bold mb-6">Používame len overené materiály</h3>
             <div class="flex flex-wrap gap-3">
               @for (partner of data.partners(); track partner) {
@@ -56,14 +57,6 @@ import { MatIconModule } from '@angular/material/icon';
             </div>
           </div>
         </div>
-
-        <div class="mt-24 pt-8 border-t border-white/10 flex flex-col md:row items-center justify-between gap-4 text-white/40 text-sm">
-          <div>© {{ currentYear }} Milan Viba - Stavebné práce. Všetky práva vyhradené.</div>
-          <div class="flex gap-6">
-            <a href="#" class="hover:text-white transition-colors">Ochrana údajov</a>
-            <a href="#" class="hover:text-white transition-colors">Cookies</a>
-          </div>
-        </div>
       </div>
     </section>
   `,
@@ -74,5 +67,34 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Contact {
   protected readonly data = inject(DataService);
-  protected readonly currentYear = new Date().getFullYear();
+
+  private readonly leftCol = viewChild<ElementRef>('leftCol');
+  private readonly rightCol = viewChild<ElementRef>('rightCol');
+
+  constructor() {
+    afterNextRender(() => {
+      const leftEl = this.leftCol()?.nativeElement;
+      const rightEl = this.rightCol()?.nativeElement;
+
+      if (leftEl) {
+        inView(leftEl, () => {
+          animate(
+            leftEl,
+            { opacity: [0, 1], x: [-30, 0] },
+            { duration: 0.8, ease: "easeOut" }
+          );
+        });
+      }
+
+      if (rightEl) {
+        inView(rightEl, () => {
+          animate(
+            rightEl,
+            { opacity: [0, 1], x: [30, 0] },
+            { duration: 0.8, ease: "easeOut" }
+          );
+        });
+      }
+    });
+  }
 }

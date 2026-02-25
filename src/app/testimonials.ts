@@ -5,26 +5,38 @@ import { MatIconModule } from '@angular/material/icon';
 import { animate, stagger, inView } from 'motion';
 
 @Component({
-  selector: 'app-services',
+  selector: 'app-testimonials',
   imports: [CommonModule, MatIconModule],
   template: `
-    <section id="services" class="py-24 bg-cream overflow-hidden">
+    <section class="py-24 bg-cream overflow-hidden">
       <div class="container mx-auto px-6">
         <div #header class="text-center mb-16 opacity-0">
-          <h2 class="text-3xl md:text-5xl font-extrabold text-anthracite mb-4">Naše služby</h2>
+          <h2 class="text-3xl md:text-5xl font-extrabold text-anthracite mb-4">Čo hovoria klienti</h2>
           <div class="w-20 h-1.5 bg-oak mx-auto rounded-full"></div>
         </div>
 
         <div #grid class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          @for (service of data.services(); track service.id) {
-            <div class="service-card bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-black/5 group opacity-0">
-              <div class="w-16 h-16 bg-cream rounded-xl flex items-center justify-center mb-6 group-hover:bg-oak transition-colors">
-                <mat-icon class="text-3xl text-oak group-hover:text-white">{{ service.icon }}</mat-icon>
+          @for (item of data.testimonials(); track item.id) {
+            <div class="testimonial-card bg-white p-10 rounded-3xl shadow-sm border border-black/5 relative opacity-0">
+              <!-- Quote Icon -->
+              <mat-icon class="absolute top-6 right-8 text-oak/10 text-6xl scale-[2]">format_quote</mat-icon>
+              
+              <div class="flex gap-1 mb-6">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <mat-icon class="text-oak text-sm">star</mat-icon>
+                }
               </div>
-              <h3 class="text-xl font-bold text-anthracite mb-4">{{ service.title }}</h3>
-              <p class="text-anthracite/70 leading-relaxed">
-                {{ service.description }}
+
+              <p class="text-anthracite/80 italic mb-8 leading-relaxed relative z-10">
+                "{{ item.text }}"
               </p>
+
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-cream rounded-full flex items-center justify-center font-bold text-oak">
+                  {{ item.name.charAt(0) }}
+                </div>
+                <div class="font-bold text-anthracite">{{ item.name }}</div>
+              </div>
             </div>
           }
         </div>
@@ -36,7 +48,7 @@ import { animate, stagger, inView } from 'motion';
   `],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class Services {
+export class Testimonials {
   protected readonly data = inject(DataService);
   private readonly header = viewChild<ElementRef>('header');
   private readonly grid = viewChild<ElementRef>('grid');
@@ -58,14 +70,14 @@ export class Services {
 
       if (gridEl) {
         inView(gridEl, () => {
-          const cards = gridEl.querySelectorAll('.service-card');
+          const cards = gridEl.querySelectorAll('.testimonial-card');
           animate(
             cards,
-            { opacity: [0, 1], y: [30, 0] },
+            { opacity: [0, 1], scale: [0.95, 1] },
             { 
-              delay: stagger(0.15),
+              delay: stagger(0.2),
               duration: 0.8,
-              ease: [0.22, 1, 0.36, 1]
+              ease: "easeOut"
             }
           );
         });
