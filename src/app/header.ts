@@ -29,7 +29,9 @@ import { MatIconModule } from '@angular/material/icon';
         <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center gap-8">
           <a href="#services" class="text-sm font-bold uppercase tracking-widest hover:text-oak transition-colors">Služby</a>
+          <a href="#process" class="text-sm font-bold uppercase tracking-widest hover:text-oak transition-colors">Postup</a>
           <a href="#gallery" class="text-sm font-bold uppercase tracking-widest hover:text-oak transition-colors">Galéria</a>
+          <a href="#testimonials" class="text-sm font-bold uppercase tracking-widest hover:text-oak transition-colors">Recenzie</a>
           <a href="#contact" class="px-5 py-2 bg-oak hover:bg-oak/90 rounded-full text-sm font-bold uppercase tracking-widest transition-all shadow-md">Kontakt</a>
         </nav>
 
@@ -49,7 +51,9 @@ import { MatIconModule } from '@angular/material/icon';
         class="fixed inset-0 top-[72px] bg-anthracite z-50 transition-transform duration-500 md:hidden flex flex-col items-center justify-center gap-8"
       >
         <a (click)="toggleMenu()" href="#services" class="text-2xl font-bold uppercase tracking-widest hover:text-oak transition-colors">Služby</a>
+        <a (click)="toggleMenu()" href="#process" class="text-2xl font-bold uppercase tracking-widest hover:text-oak transition-colors">Postup</a>
         <a (click)="toggleMenu()" href="#gallery" class="text-2xl font-bold uppercase tracking-widest hover:text-oak transition-colors">Galéria</a>
+        <a (click)="toggleMenu()" href="#testimonials" class="text-2xl font-bold uppercase tracking-widest hover:text-oak transition-colors">Recenzie</a>
         <a (click)="toggleMenu()" href="#contact" class="px-10 py-4 bg-oak rounded-full text-xl font-bold uppercase tracking-widest">Kontakt</a>
       </div>
     </header>

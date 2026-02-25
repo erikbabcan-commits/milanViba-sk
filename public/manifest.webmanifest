@@ -1,16 +1,41 @@
 {
-  "name": "Milan Viba - Stavebné práce",
+  "name": "Milan Viba - Profesionálne stavebné práce",
   "short_name": "Viba Stavby",
+  "description": "Kompletné rekonštrukcie bytov a domov, obklady, dlažby a sadrokartóny. Precízna práca od Milana Vibu.",
   "theme_color": "#1e293b",
   "background_color": "#fdfbf7",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Domovská stránka"
+    },
+    {
+      "src": "screenshots/mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobilná verzia"
     }
   ]
 }

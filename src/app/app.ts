@@ -13,11 +13,12 @@ import { Footer } from './footer';
 import { Fab } from './fab';
 import { ScrollTop } from './scroll-top';
 import { CookieConsent } from './cookie-consent';
+import { PwaInstall } from './pwa-install';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  imports: [Preloader, Header, Hero, Services, Features, Partners, Process, Gallery, Testimonials, Contact, Footer, Fab, ScrollTop, CookieConsent],
+  imports: [Preloader, Header, Hero, Services, Features, Partners, Process, Gallery, Testimonials, Contact, Footer, Fab, ScrollTop, CookieConsent, PwaInstall],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
